@@ -1,58 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+
 class CustomBottomNavigation extends StatelessWidget {
-  const CustomBottomNavigation({super.key});
+  final int currentIndex;
 
-  int getCurrentIndex( BuildContext context ) {
-    final String location = GoRouterState.of(context).matchedLocation;
-
-    switch(location) {
-      case '/':
-        return 0;
-      case '/categorias':
-        return 1;
-      case '/favorites':
-        return 2;
-      default:
-        return 0;
-    }
-  }
+  const CustomBottomNavigation({
+    super.key, 
+    required this.currentIndex,
+  });
 
   void onItemTapped( BuildContext context, int index ) {
-
     switch( index ) {
       case 0:
-        context.go('/');
-      break;
+        context.go('/home/0');
+        break;
       case 1:
-        context.go('/');
-      break;
+        context.go('/home/1');
+        break;
       case 2:
-        context.go('/favorites');
-      break;
+        context.go('/home/2');
+        break;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return NavigationBar(
-      elevation: 0,     
-      selectedIndex: getCurrentIndex(context),
-      onDestinationSelected: (index) {
-        onItemTapped(context, index);
-      },
-      destinations: const[
-        NavigationDestination(
-          icon: Icon(Icons.home_max_outlined), 
+
+    final colors = Theme.of(context).colorScheme;
+
+    return BottomNavigationBar(
+      currentIndex: currentIndex,
+      elevation: 0,
+      onTap: (value) => onItemTapped(context, value),
+      selectedItemColor: colors.primary,
+      unselectedItemColor: colors.onSurface.withOpacity(0.6),
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon( Icons.home_max ),
           label: 'Inicio'
         ),
-        NavigationDestination(
-          icon: Icon(Icons.label_outline), 
-          label: 'Categorias'
+        BottomNavigationBarItem(
+          icon: Icon( Icons.thumbs_up_down_outlined ),
+          label: 'Populares'
         ),
-        NavigationDestination(
-          icon: Icon(Icons.favorite_outline), 
+        BottomNavigationBarItem(
+          icon: Icon( Icons.favorite_outline ),
           label: 'Favoritos'
         ),
       ]

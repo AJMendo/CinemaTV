@@ -1,20 +1,17 @@
 import 'package:cinematv/presentation/screens/screens.dart';
-import 'package:cinematv/presentation/views/views.dart';
 import 'package:go_router/go_router.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/',
+  initialLocation: '/home/0',
   routes: [
 
-    ShellRoute(
-      builder: (context, state, child) {
-        return HomeScreen(childView: child);
-      },
-      routes: [
         GoRoute(
-          path: '/',
+          path: '/home/:page',
+          name: HomeScreen.name,
           builder: (context, state) {
-            return const HomeView();
+            final pageIndex = int.parse (state.pathParameters['page'] ?? '0');
+
+            return HomeScreen( pageIndex: pageIndex );
           },
           routes: [
             GoRoute(
@@ -29,31 +26,14 @@ final appRouter = GoRouter(
         ),
 
         GoRoute(
-          path: '/favorites',
-          builder: (context, state) {
-            return const FavoritesView();
-          },
+          path: '/',
+          redirect: ( _ , __ ) => '/home/0',
         ),
+
       ]
-    ),
+    );
     
-    // Rutas padre/hijo
-    //GoRoute(
-    //  path: '/',
-    //  name: HomeScreen.name,
-    //  builder: (context, state) => const HomeScreen( childView: HomeView() ),
-    //  routes: [
-    //    GoRoute(
-    //    path: 'movie/:id',
-    //    name: MovieScreen.name,
-    //    builder: (context, state) {
-    //      final movieId = state.pathParameters['id'] ?? 'no-id';
-    //      return MovieScreen( movieId: movieId);
-    //    },
-    //),
-    //  ]
-    //),
+ 
 
     
-  ]
-);
+  

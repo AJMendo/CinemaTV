@@ -1,4 +1,5 @@
+export 'package:cinematv/presentation/views/movies/favorites_view.dart';
+export 'package:cinematv/presentation/views/movies/home_view.dart';
 
-export 'package:cinematv/presentation/views/home_views/favorites_views.dart';
+export 'movies/popular_view.dart';
 
-export 'home_views/home_view.dart';

@@ -3,7 +3,6 @@ import 'package:cinematv/presentation/providers/actors/actors_repository_provide
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final actorsByMovieProvider = StateNotifierProvider<ActorsByMovieNotifier, Map<String, List<Actor>>> ((ref) {
-
 final actorsRepository = ref.watch( actorsRepositoryProvider );
 
 return ActorsByMovieNotifier( getActors: actorsRepository.getActorsByMovie );

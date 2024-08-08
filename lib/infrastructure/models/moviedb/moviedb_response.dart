@@ -1,4 +1,3 @@
-
 import 'movie_moviedb.dart';
 
 class MovieDbResponse {
@@ -52,5 +51,3 @@ class Dates {
         "minimum": "${minimum.year.toString().padLeft(4, '0')}-${minimum.month.toString().padLeft(2, '0')}-${minimum.day.toString().padLeft(2, '0')}",
     };
 }
-
-

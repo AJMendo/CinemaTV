@@ -1,4 +1,3 @@
-
 import 'package:cinematv/domain/entities/movie.dart';
 import 'package:cinematv/presentation/providers/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -1,5 +1,5 @@
 import 'package:cinematv/domain/datasources/movies_datasource.dart';
-import 'package:cinematv/domain/entities/movie.dart';
+import 'package:cinematv/domain/entities/entities.dart';
 import 'package:cinematv/domain/repositories/movies_repository.dart';
 
 class MovieRepositoryImpl extends MoviesRepository {
@@ -39,6 +39,14 @@ class MovieRepositoryImpl extends MoviesRepository {
     return datasource.searchMovies(query);
   }
   
- 
+  @override
+  Future<List<Movie>> getSimilarMovies(int movieId) {
+    return datasource.getSimilarMovies(movieId);
+  }
+  
+  @override
+  Future<List<Video>> getYoutubeVideosById(int movieId) {
+    return datasource.getYoutubeVideosById(movieId);
+  }
 
 }

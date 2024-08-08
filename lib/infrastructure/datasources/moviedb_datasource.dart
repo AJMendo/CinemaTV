@@ -1,9 +1,8 @@
 import 'package:cinematv/config/constants/environment.dart';
 import 'package:cinematv/domain/datasources/movies_datasource.dart';
-import 'package:cinematv/domain/entities/movie.dart';
-import 'package:cinematv/infrastructure/mappers/movie_mapper.dart';
-import 'package:cinematv/infrastructure/models/moviedb/movie_details.dart';
-import 'package:cinematv/infrastructure/models/moviedb/moviedb_response.dart';
+import 'package:cinematv/domain/entities/entities.dart';
+import 'package:cinematv/infrastructure/mappers/mappers.dart';
+import 'package:cinematv/infrastructure/models/models.dart';
 import 'package:dio/dio.dart';
 
 
@@ -78,11 +77,8 @@ class MoviedbDataSource extends MoviesDatasource {
 
     final response = await dio.get('/movie/$id');
     if ( response.statusCode != 200 ) throw Exception('Movie with id: $id not found ');
-
     final movieDetails = MovieDetails.fromJson( response.data );
-
     final Movie movie = MovieMapper.movieDetailsToEntity(movieDetails);
-    
     return movie;
   }
   
@@ -90,13 +86,35 @@ class MoviedbDataSource extends MoviesDatasource {
   Future<List<Movie>> searchMovies(String query) async{
 
     if ( query.isEmpty ) return [];
-    
     final response = await dio.get('/search/movie',
       queryParameters: {
         'query': query,
       }
     );
     return _jsonToMovies(response.data);
+  }
+
+  @override
+  Future<List<Movie>> getSimilarMovies(int movieId) async {
+    final response = await dio.get('/movie/$movieId/similar');
+    return _jsonToMovies(response.data);
+  }
+
+  
+  @override
+  Future<List<Video>> getYoutubeVideosById(int movieId) async {
+    final response = await dio.get('/movie/$movieId/videos');
+    final moviedbVideosReponse = MoviedbVideosResponse.fromJson(response.data);
+    final videos = <Video>[];
+
+    for (final moviedbVideo in moviedbVideosReponse.results) {
+      if ( moviedbVideo.site == 'YouTube' ) {
+        final video = VideoMapper.moviedbVideoToEntity(moviedbVideo);
+        videos.add(video);
+      }
+    }
+
+    return videos;
   }
 
 

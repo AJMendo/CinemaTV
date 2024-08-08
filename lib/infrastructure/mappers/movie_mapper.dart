@@ -3,7 +3,6 @@ import 'package:cinematv/infrastructure/models/moviedb/movie_details.dart';
 import 'package:cinematv/infrastructure/models/moviedb/movie_moviedb.dart';
 
 class MovieMapper {
-
   static Movie movieDBToEntity( MovieMovieDB moviedb ) => Movie(
     adult: moviedb.adult, 
     backdropPath: (moviedb.backdropPath != '') 
