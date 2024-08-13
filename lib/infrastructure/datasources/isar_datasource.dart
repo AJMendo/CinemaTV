@@ -1,6 +1,7 @@
 import 'package:cinematv/domain/datasources/local_storage_datasource.dart';
 import 'package:cinematv/domain/entities/movie.dart';
 import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
 
 class IsarDatasource extends LocalStorageDatasource {
 
@@ -13,10 +14,14 @@ class IsarDatasource extends LocalStorageDatasource {
   Future<Isar> openDB() async {
 
     // Obtener el directorio de documentos
-    //final dir = await getApplicationDocumentsDirectory();
-    //final path = dir.path;
+    final dir = await getApplicationDocumentsDirectory();
+    
     if ( Isar.instanceNames.isEmpty ) {
-      return await Isar.open([ MovieSchema ],inspector: true, directory: Isar.version );
+      return await Isar.open(
+        [ MovieSchema ],
+        inspector: true, 
+        directory: dir.path, 
+      );
     }
 
     return Future.value(Isar.getInstance());
