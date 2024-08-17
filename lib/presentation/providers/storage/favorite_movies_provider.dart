@@ -3,10 +3,13 @@ import 'package:cinematv/domain/repositories/local_storage_repository.dart';
 import 'package:cinematv/presentation/providers/providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+
+
 final favoriteMoviesProvider = StateNotifierProvider<StorageMoviesNotifier,Map<int,Movie>>((ref) {
   final localStorageRepository = ref.watch( localStorageRepositoryProvider );
   return StorageMoviesNotifier(localStorageRepository: localStorageRepository);
 });
+
 
 /*
   {
@@ -18,12 +21,14 @@ final favoriteMoviesProvider = StateNotifierProvider<StorageMoviesNotifier,Map<i
 */
 
 class StorageMoviesNotifier extends StateNotifier<Map<int, Movie>> {
+  
   int page = 0;
   final LocalStorageRepository localStorageRepository;
 
   StorageMoviesNotifier({
     required this.localStorageRepository
   }): super({});
+
 
   Future<List<Movie>> loadNextPage() async {
     final movies = await localStorageRepository.loadMovies(offset: page * 10, limit: 20);
@@ -35,6 +40,7 @@ class StorageMoviesNotifier extends StateNotifier<Map<int, Movie>> {
     }
 
     state = { ...state, ...tempMoviesMap };
+
     return movies;
   }
 

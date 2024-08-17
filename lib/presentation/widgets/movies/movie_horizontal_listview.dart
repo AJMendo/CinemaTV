@@ -54,7 +54,7 @@ class _MovieHorizontalListviewState extends State<MovieHorizontalListview> {
         children: [
 
           if ( widget.title != null || widget.subTitle != null )
-            _Title(widget.title, widget.subTitle),
+            _Title(title: widget.title, subTitle: widget.subTitle),
 
             Expanded(
               child: ListView.builder(
@@ -63,7 +63,7 @@ class _MovieHorizontalListviewState extends State<MovieHorizontalListview> {
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return FadeInRight(child: _Slide(widget.movies[index]));
+                  return FadeInRight(child: _Slide(movie: widget.movies[index]));
                 },
               ),
             ),
@@ -77,7 +77,7 @@ class _Slide extends StatelessWidget {
 
   final Movie movie;
 
-  const _Slide(this.movie);
+  const _Slide({ required this.movie });
 
   @override
   Widget build(BuildContext context) {
@@ -131,12 +131,12 @@ class _Slide extends StatelessWidget {
 class _Title extends StatelessWidget {
 
   final String? title;
-  final String? subtitle;
+  final String? subTitle;
 
-  const _Title(
+  const _Title({
     this.title, 
-    this.subtitle,
-  );
+    this.subTitle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -153,11 +153,11 @@ class _Title extends StatelessWidget {
 
           const Spacer(),
 
-          if (subtitle != null)
+          if (subTitle != null)
             FilledButton.tonal(
               style: const ButtonStyle( visualDensity: VisualDensity.compact ),
               onPressed: (){}, 
-              child: Text(subtitle!),
+              child: Text(subTitle!),
             )
         ],
       ),
